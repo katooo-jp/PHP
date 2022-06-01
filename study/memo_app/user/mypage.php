@@ -1,4 +1,6 @@
 <?php
+require_once('../memo/db_connect.php');
+
 //--------------------- session ------------------------
 session_start();
 // 未ログインはログイン画面へリダイレクト
@@ -7,29 +9,12 @@ if(!isset($_SESSION['login'])) {header('location: login.php');exit();}
 // -----------------------------------------------------
 
 // -----------------------　DB ---------------------------
-$user = 'root';
-$password = 'root';
-$dbName = 'kato_db';
-$host = 'localhost:8889';
-$dsn = "mysql:host={$host};dbname={$dbName};charset=utf8";
+$sql = "select * from user where user_id=?";
+$stm = $stm = $pdo->prepare($sql);
+$stm->bindValue(1, $_SESSION['login'], PDO::PARAM_STR);
 
-try {
-    $pdo = new PDO($dsn, $user, $password);
-    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $sql = "select * from user where user_id=?";
-    $stm = $stm = $pdo->prepare($sql);
-    $stm->bindValue(1, $_SESSION['login'], PDO::PARAM_STR);
-
-    $stm->execute();
-    $result = $stm->fetchALL(PDO::FETCH_ASSOC);
-
-    } catch (Exception $e) {
-    $err =  '<span class="error">エラーがありました。</span><br>';
-    $err .= $e->getMessage();
-    exit($err);
-}
+$stm->execute();
+$result = $stm->fetchALL(PDO::FETCH_ASSOC);
 // -------------------------------------------------------------------
 ?>
 

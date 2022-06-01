@@ -1,4 +1,5 @@
 <?php
+require_once('db_connect.php');
 // -------- session ---------
 session_start();
 // 未ログインはログイン画面へリダイレクト
@@ -16,30 +17,13 @@ if(isset($_SESSION['title']) and isset($_SESSION['content'])) {
 // --------------------------
 
 // ーーーーーーー　DB　ーーーーーーーーーー
-$user = 'root';
-$password = 'root';
-$dbName = 'kato_db';
-$host = 'localhost:8889';
-$dsn = "mysql:host={$host};dbname={$dbName};charset=utf8";
-
-try {
-    $pdo = new PDO($dsn, $user, $password);
-    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $sql = "insert into memo(title,content,user_id) values (?,?,?)";
-    $stm = $stm = $pdo->prepare($sql);
-    $stm->bindValue(1, $title, PDO::PARAM_STR);
-    $stm->bindValue(2, $content, PDO::PARAM_STR);
-    $stm->bindValue(3, $_SESSION['login'], PDO::PARAM_STR);
-    $stm->execute();
-    $result = $stm->fetchALL(PDO::FETCH_ASSOC);
-
-    } catch (Exception $e) {
-    $err =  '<span class="error">エラーがありました。</span><br>';
-    $err .= $e->getMessage();
-    exit($err);
-}
+$sql = "insert into memo(title,content,user_id) values (?,?,?)";
+$stm = $stm = $pdo->prepare($sql);
+$stm->bindValue(1, $title, PDO::PARAM_STR);
+$stm->bindValue(2, $content, PDO::PARAM_STR);
+$stm->bindValue(3, $_SESSION['login'], PDO::PARAM_STR);
+$stm->execute();
+$result = $stm->fetchALL(PDO::FETCH_ASSOC);
 // -------------------------------------------------------------------
 
 // 登録後処理

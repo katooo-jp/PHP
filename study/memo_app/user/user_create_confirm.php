@@ -1,4 +1,6 @@
 <?php
+require_once('../memo/db_connect.php');
+
 // POSTでないならホーム画面へ
 if($_SERVER["REQUEST_METHOD"] != "POST"){
     header('location: ../memo/index.php');
@@ -7,31 +9,14 @@ if($_SERVER["REQUEST_METHOD"] != "POST"){
 
 $errors = [];
 // -----------------------　DB ---------------------------
-$user = 'root';
-$password = 'root';
-$dbName = 'kato_db';
-$host = 'localhost:8889';
-$dsn = "mysql:host={$host};dbname={$dbName};charset=utf8";
-
 // 使用済みユーザーIDでないか判定
 if(isset($_POST['create_id'])) {
     $idlen =  mb_strlen($_POST['create_id']);
     if($_POST['create_id'] != '' and $idlen <= 16 and $idlen >= 8){
-        try {
-            $pdo = new PDO($dsn, $user, $password);
-            $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        
             $sql = "select user_id from user";
             $stm = $stm = $pdo->prepare($sql);
             $stm->execute();
             $result = $stm->fetchALL(PDO::FETCH_ASSOC);
-
-            } catch (Exception $e) {
-            $err =  '<span class="error">エラーがありました。</span><br>';
-            $err .= $e->getMessage();
-            exit($err);
-        }
         if(in_array($_POST['create_id'], array_column( $result, 'user_id'))){
             $errors[] = 'すでにこのユーザーIDは使われています。';
         }

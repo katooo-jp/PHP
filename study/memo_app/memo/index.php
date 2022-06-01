@@ -1,4 +1,5 @@
 <?php
+require_once('db_connect.php');
 //--------------------- session ------------------------
 session_start();
 // 未ログインはログイン画面へリダイレクト
@@ -7,45 +8,30 @@ if(!isset($_SESSION['login'])) {header('location: ../user/login.php');exit();}
 // -----------------------------------------------------
 
 // -----------------------　DB ---------------------------
-$user = 'root';
-$password = 'root';
-$dbName = 'kato_db';
-$host = 'localhost:8889';
-$dsn = "mysql:host={$host};dbname={$dbName};charset=utf8";
 
-try {
-    $pdo = new PDO($dsn, $user, $password);
-    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // GET or POST
-    if($_SERVER["REQUEST_METHOD"] != "POST"){
-        // GET処理
-        $sql = "select * from memo where user_id=?";
-        $stm = $pdo->prepare($sql);
+// GET or POST
+if($_SERVER["REQUEST_METHOD"] != "POST"){
+    // GET処理
+    $sql = "select * from memo where user_id=?";
+    $stm = $pdo->prepare($sql);
+    $stm->bindValue(1, $_SESSION['login'], PDO::PARAM_STR);
+}else {
+    // POST処理
+    if($_POST['search'] == ''):
+        header('location: index.php');
+        exit();
+    else:
+        $search = $_POST['search'];
+        $sql = "select * from memo where user_id=? and (title like ? or content like ?)";
+        $stm = $stm = $pdo->prepare($sql);
         $stm->bindValue(1, $_SESSION['login'], PDO::PARAM_STR);
-    }else {
-        // POST処理
-        if($_POST['search'] == ''):
-            header('location: index.php');
-            exit();
-        else:
-            $search = $_POST['search'];
-            $sql = "select * from memo where user_id=? and title like ? or content like ?";
-            $stm = $stm = $pdo->prepare($sql);
-            $stm->bindValue(1, $_SESSION['login'], PDO::PARAM_STR);
-            $stm->bindValue(2, "%{$search}%", PDO::PARAM_STR);
-            $stm->bindValue(3, "%{$search}%", PDO::PARAM_STR);
-        endif;
-    }
-    $stm->execute();
-    $result = $stm->fetchALL(PDO::FETCH_ASSOC);
-
-    } catch (Exception $e) {
-    $err =  '<span class="error">エラーがありました。</span><br>';
-    $err .= $e->getMessage();
-    exit($err);
+        $stm->bindValue(2, "%{$search}%", PDO::PARAM_STR);
+        $stm->bindValue(3, "%{$search}%", PDO::PARAM_STR);
+    endif;
 }
+$stm->execute();
+$result = $stm->fetchALL(PDO::FETCH_ASSOC);
+
 // -------------------------------------------------------------------
 ?>
 

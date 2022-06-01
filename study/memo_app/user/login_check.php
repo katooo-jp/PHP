@@ -1,4 +1,5 @@
 <?php
+require_once('../memo/db_connect.php');
 if($_SERVER["REQUEST_METHOD"] != "POST"){
     header('location: mypage.php');
     exit();
@@ -18,28 +19,12 @@ if(isset($_POST['login_id']) and isset($_POST['login_pass'])) {
 // -----------------------------------------------------
 
 // -----------------------　DB ---------------------------
-$user = 'root';
-$password = 'root';
-$dbName = 'kato_db';
-$host = 'localhost:8889';
-$dsn = "mysql:host={$host};dbname={$dbName};charset=utf8";
+$sql = "select user_id, password from user where user_id=?";
+$stm = $stm = $pdo->prepare($sql);
+$stm->bindValue(1, $_POST['login_id'], PDO::PARAM_STR);
 
-try {
-    $pdo = new PDO($dsn, $user, $password);
-    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $sql = "select user_id, password from user where user_id=?";
-    $stm = $stm = $pdo->prepare($sql);
-    $stm->bindValue(1, $_POST['login_id'], PDO::PARAM_STR);
-
-    $stm->execute();
-    $result = $stm->fetchALL(PDO::FETCH_ASSOC);
-
-} catch (Exception $e) {
-    header('location: login.php');
-    exit();
-}
+$stm->execute();
+$result = $stm->fetchALL(PDO::FETCH_ASSOC);
 // -------------------------------------------------------------------
 
 // ユーザー認証

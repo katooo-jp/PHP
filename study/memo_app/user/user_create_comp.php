@@ -1,4 +1,5 @@
 <?php
+require_once('../memo/db_connect.php');
 
 // -------- session ---------
 session_start();
@@ -20,34 +21,17 @@ session_destroy();
 // --------------------------
 
 // ---------------------- DB -------------------------
-$user = 'root';
-$password = 'root';
-$dbName = 'kato_db';
-$host = 'localhost:8889';
-$dsn = "mysql:host={$host};dbname={$dbName};charset=utf8";
-
-try {
-    $pdo = new PDO($dsn, $user, $password);
-    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $sql = "insert into user(user_id,password,name,sex,birthday,hobby,introduce) values (?,?,?,?,?,?,?)";
-    $stm = $stm = $pdo->prepare($sql);
-    $stm->bindValue(1, $create_id, PDO::PARAM_STR);
-    $stm->bindValue(2, $create_pass, PDO::PARAM_STR);
-    $stm->bindValue(3, $create_name, PDO::PARAM_STR);
-    $stm->bindValue(4, $create_sex, PDO::PARAM_STR);
-    $stm->bindValue(5, $create_date, PDO::PARAM_STR);
-    $stm->bindValue(6, $create_hobby, PDO::PARAM_STR);
-    $stm->bindValue(7, $create_intro, PDO::PARAM_STR);
-    $stm->execute();
-    $result = $stm->fetchALL(PDO::FETCH_ASSOC);
-
-    } catch (Exception $e) {
-    $err =  '<span class="error">エラーがありました。</span><br>';
-    $err .= $e->getMessage();
-    exit($err);
-}
+$sql = "insert into user(user_id,password,name,sex,birthday,hobby,introduce) values (?,?,?,?,?,?,?)";
+$stm = $stm = $pdo->prepare($sql);
+$stm->bindValue(1, $create_id, PDO::PARAM_STR);
+$stm->bindValue(2, $create_pass, PDO::PARAM_STR);
+$stm->bindValue(3, $create_name, PDO::PARAM_STR);
+$stm->bindValue(4, $create_sex, PDO::PARAM_STR);
+$stm->bindValue(5, $create_date, PDO::PARAM_STR);
+$stm->bindValue(6, $create_hobby, PDO::PARAM_STR);
+$stm->bindValue(7, $create_intro, PDO::PARAM_STR);
+$stm->execute();
+$result = $stm->fetchALL(PDO::FETCH_ASSOC);
 // -------------------------------------------------------------------
 
 // -----------------------------------------------------
