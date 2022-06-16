@@ -1,0 +1,30 @@
+
+ーーーーーー　laravelコマンド関係　ーーーーーー
+laravelアプリの立ち上げ
+    composer create-project "laravel/laravel=6.*" アプリ名
+
+コントローラー作成
+    php artisan make:controller コントローラー名
+
+プロバイダ作成
+    php artisan make:provider プロバイダ名
+ーーーーーーーーーーーーーーーーーーーーーーーー
+
+
+
+ーーーーーー　check point　ーーーーーー
+コントローラーについて
+app/Http/Controllers/HelloController.php
+
+ルーティングについて
+routes/web.php
+
+テンプレート関連
+resources/views/base.blade.php
+
+プロバイダについて
+app/Providers/HelloServiceProvider.php
+
+コンポーザについて
+app/Http/Composers/HelloComposer.php
+ーーーーーーーーーーーーーーーーーーーーー
