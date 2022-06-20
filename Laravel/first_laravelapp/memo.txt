@@ -11,6 +11,8 @@ laravelアプリの立ち上げ
 
 ミドルウェア作成
     php artisan make:middleware ミドルウェア名
+フォームリクエスト作成
+    php artisan make:request フォームリクエスト名
 ーーーーーーーーーーーーーーーーーーーーーーーー
 
 
@@ -30,4 +32,7 @@ app/Providers/HelloServiceProvider.php
 
 コンポーザについて
 app/Http/Composers/HelloComposer.php
+
+フォームレクエストについて
+app/Http/Requests/HelloRequest.php
 ーーーーーーーーーーーーーーーーーーーーー

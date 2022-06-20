@@ -2,22 +2,36 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Requests\HelloRequest;
+use Illuminate\Support\Facades\Validator;
 
 class HelloController extends Controller {
     public function index() {
         return view('hello.index', ['msg'=>'メッセージを入力してください']);
     }
 
-    public function post(Request $request) {
-        $validate_rule = [
-            'name' => 'required',
-            'mail' => 'email',
-            'age' => 'numeric|between:0,150',
-        ];
-        $this->validate($request, $validate_rule);
-        return view('hello.index', ['msg'=> $request->name.'は正しく入力された']);
+    public function post(HelloRequest $request) {
+        // $validate_rule = [
+        //     'name' => 'required',
+        //     'mail' => 'email',
+        //     'age' => 'numeric|between:0,150',
+        // ];
+        // $this->validate($request, $validate_rule);
+
+        $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'mail' => 'email',
+                'age' => 'numeric|between:0,150',
+        ]);
+        if ($validator->fails()) {
+            return redirect('/hello')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+        return view('hello.index', ['msg'=> '正しく入力された']);
     }
 }
 
@@ -67,6 +81,13 @@ class HelloController extends Controller {
 //     '項目名'=>'割り当てる検証ルール','割り当てる検証ルール2',
 // ]
 // で渡す
+// 検証ルール一覧
+// ・accept ・active_url ・url ・after:日付 ・after_or_equel:日付 ・before:日付 ・before_or_equal:日付
+// ・alpha ・alpha-dash ・alpha-num ・array ・bail ・between:最小値,最大値 ・boolean ・confirmed
+// ・date ・date_equels:日付 ・date_dormat:フォーマット ・different:フィールド ・same:フィールド
+// ・digits:桁数 ・same:フィールド ・digits:桁数 ・digits_between:最小桁数,最大桁数 ・dimensions:設定内容
+// ・distinct ・email ・exists:テーブル,カラム ・file ・filled ・required ・image ・gt:項目 ・gte:項目
+// ・lt:項目 ・lte:項目  etc...
 
 // エラーがあれば $errors に格納される
 // $errors->has(項目名);
@@ -74,3 +95,10 @@ class HelloController extends Controller {
 // $errors->first(項目名);
 // エラーメッセージを取得できる
 // ---------------------------------
+
+// -------- Requestにようるバリデーション ----------
+// フォームのバリデーションはコントロールにあるよりフォーム内で行うほうが良い
+// laravelではRequestクラスを継承してFormRequestがあり、これでリクエストでバリデーションを行える
+// 引数で受け取るRequestを継承して作ったRequestに変更して利用
+// app/Http/Requests/HelloRequest.php記載
+// ---------------------------------------------
