@@ -7,13 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Requests\HelloRequest;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class HelloController extends Controller {
     public function index() {
-        return view('hello.index', ['msg'=>'メッセージを入力してください']);
+        $items = DB::select('select * from people');
+        return view('hello.index', ['items'=>$items]);
     }
 
-    public function post(HelloRequest $request) {
+    public function post(Request $request) {
         // $validate_rule = [
         //     'name' => 'required',
         //     'mail' => 'email',
@@ -102,3 +104,22 @@ class HelloController extends Controller {
 // 引数で受け取るRequestを継承して作ったRequestに変更して利用
 // app/Http/Requests/HelloRequest.php記載
 // ---------------------------------------------
+
+
+// ------------------DBの利用-----------------------
+// laravelのDB利用は　'DBクラス'　や　'Eloquent(ORM)'　がある
+
+// ＿＿＿DBクラス＿＿＿
+// SQLクエリを直接実行するのに近い感じで使える
+// DB::select('SQL文');
+// DB::insert('SQL文');
+// DB::update('SQL文');
+// DB::delete('SQL文');
+// DB::table('テーブル名')->get('カラム名');
+// 引数がなければ全カラム
+
+// ＿＿＿Eloquent(ORM)＿＿＿
+// PHPのオブジェクトに近い形でDBを扱える
+
+
+// ------------------------------------------------

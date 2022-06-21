@@ -35,4 +35,8 @@ app/Http/Composers/HelloComposer.php
 
 フォームレクエストについて
 app/Http/Requests/HelloRequest.php
+
+DBについて
+app/Http/Controllers/HelloController.php
+設定はapp/config/database.phpへ記述
 ーーーーーーーーーーーーーーーーーーーーー
