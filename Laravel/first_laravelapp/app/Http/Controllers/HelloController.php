@@ -117,9 +117,4 @@ class HelloController extends Controller {
 // DB::delete('SQL文');
 // DB::table('テーブル名')->get('カラム名');
 // 引数がなければ全カラム
-
-// ＿＿＿Eloquent(ORM)＿＿＿
-// PHPのオブジェクトに近い形でDBを扱える
-
-
 // ------------------------------------------------

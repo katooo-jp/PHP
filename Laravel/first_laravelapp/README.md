@@ -16,6 +16,9 @@
 
 + フォームリクエスト作成
 > `php artisan make:request フォームリクエスト名`
+
++ モデルの作成
+> `php artisan make:model モデル名`
 ### ーーーーーーーーーーーーーーーーーーーーーーーー
 
 
@@ -40,6 +43,10 @@
 > app/Http/Requests/HelloRequest.php
 
 + DBについて
-> app/Http/Controllers/HelloController.php
 > 設定はapp/config/database.phpへ記述
+> DBクラスでの利用について
+> app/Http/Controllers/HelloController.php
+> Eloquent(ORM)について
+> app/Person.php
+
 ### ーーーーーーーーーーーーーーーーーーーーー
