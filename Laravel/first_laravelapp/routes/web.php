@@ -25,3 +25,33 @@ Route::post('person/find', 'PersonController@search');
 // 複数も可能
     // Route::get(...)->middleware(...)->middleware(...);
 
+
+// ------------------実習---------------------
+Route::get('jissyu2', 'JissyuController@index');
+
+Route::get('jissyu3', 'Jissyu3_1Controller@index');
+Route::post('jissyu3', 'Jissyu3_1Controller@post');
+
+Route::get('chapter3_2', 'Chapter3_2Controller@index');
+
+Route::get('jissyu6', 'Jissyu4_1Controller@index');
+Route::post('jissyu6', 'Jissyu4_1Controller@post');
+
+Route::get('jissyu4_2', 'Jissyu4_2Controller@index');
+Route::post('jissyu4_2', 'Jissyu4_2Controller@post');
+
+Route::get('jissyu4_3', 'Jissyu4_3Controller@index');
+Route::post('jissyu4_3', 'Jissyu4_3Controller@post');
+
+Route::get('jissyu4_4', 'Jissyu4_4Controller@index');
+Route::post('jissyu4_4', 'Jissyu4_4Controller@post');
+// ------------------------------------------
+
+
+
+// テスト（laravel効果測定1回）
+//問題1
+Route::get('kouka1_1', 'Kouka1_1Controller@index');
+//問題2
+Route::get('kouka1_2', 'Kouka1_2Controller@index');
+Route::post('kouka1_2', 'Kouka1_2Controller@post');
