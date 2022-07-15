@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use \App\News;
 
 class NewsController extends Controller {
     public function index() {
         return view('news/mypage');
     }
 
-
-    public function create() {
-        //
+    public function create(Request $request) {
+        return view('news/create');
     }
 
     public function store(Request $request) {

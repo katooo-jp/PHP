@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('dropdown')
+    <a class="dropdown-item" href="/home/news">mypage</a>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

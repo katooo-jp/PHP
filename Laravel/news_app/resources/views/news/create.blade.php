@@ -20,7 +20,7 @@
 
                     @if (Auth::check())
                         <p>ようこそ、{{Auth::user()->name}}さん<br>
-                        this detail page.</p>
+                        this create page.</p>
                     @endif
                 </div>
             </div>
