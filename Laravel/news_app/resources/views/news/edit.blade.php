@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('dropdown')
-    <a class="dropdown-item" href="/home/news">mypage</a>
+    <a class="dropdown-item" href="{{route('home')}}">Home</a>
+    <a class="dropdown-item" href="{{route('news.index')}}">My page</a>
 @endsection
 
 @section('content')

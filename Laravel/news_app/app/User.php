@@ -38,7 +38,7 @@ class User extends Authenticatable
     ];
 
     // リレーション
-    public function get_news() {
+    public function news() {
         return $this->hasMany('App\News');
     }
 }

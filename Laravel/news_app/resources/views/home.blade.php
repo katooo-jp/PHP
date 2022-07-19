@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('dropdown')
-    <a class="dropdown-item" href="/home/news">mypage</a>
+    <a class="dropdown-item" href="{{route('home')}}">Home</a>
+    <a class="dropdown-item" href="{{route('news.index')}}">My page</a>
 @endsection
 
 @section('content')
@@ -12,12 +13,6 @@
                 <div class="card-header">Dashboard</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
                     @if (Auth::check())
                         <p>ようこそ、{{Auth::user()->name}}さん<br>
                             <span class="text-primary fw-bolder fs-4 mr-2">News App</span>のユーザになったその日からあなたは最高にクールだ！！</p>
@@ -47,6 +42,9 @@
 
                         <p class="m-0">作成者:{{$news[$i]['author']}}</p>
                         <p>{{$news[$i]['create_at']}}</p>
+                        <div class="mb-5 text-right">
+                            <a class="btn btn-primary" href="{{route('news.create')}}?id={{Auth::id()}}&title={{$news[$i]['title']}}&url={{$news[$i]['url']}}&image={{$news[$i]['image']}}&author={{$news[$i]['author']}}&create_at={{$news[$i]['create_at']}}" role="button">お気に入り追加</a>
+                        </div>
                     </div>
                     @endfor
                 </div>

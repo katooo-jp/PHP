@@ -5,16 +5,15 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class CreateNewsTable extends Migration {
-    public function up()
-    {
+    public function up() {
         Schema::create('news', function (Blueprint $table) {
-            $table->string('id')->unique();
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->string('author')->nullable();
             $table->string('title');
             $table->string('url');
             $table->string('image');
-            $table->date('news_create_at');
+            $table->string('news_create_at');
             $table->timestamps();
 
             // Foreign key
@@ -22,8 +21,7 @@ class CreateNewsTable extends Migration {
         });
     }
 
-    public function down()
-    {
+    public function down() {
         Schema::dropIfExists('news');
     }
 }
